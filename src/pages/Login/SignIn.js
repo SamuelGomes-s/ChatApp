@@ -1,42 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Keyboard, Text, TouchableOpacity } from 'react-native';
 import { AreaInput, Background, Input, Slogan, SubmitButton, SubmitText, TitleApp } from './styles';
-import auth from '@react-native-firebase/auth';
-import { useNavigation } from '@react-navigation/native';
+import { Context } from '../../context/context';
 
 
 
 export default function SignIn() {
-  const [type, setType] = useState(false)
+
+  const { handleUserLogin, type, setType } = useContext(Context)
+
+
   const [email, setEmail] = useState('')
   const [name, setName] = useState('')
   const [password, setPassword] = useState('')
-  const navigation = useNavigation()
 
   function handleLogin() {
     Keyboard.dismiss()
-    if (type) {
-      //Cadastrar 
-      if (name === '' || email === '' || password === '') {
-        alert("Preencha todos os campos!")
-        return
-      }
-
-      auth().createUserWithEmailAndPassword(email, password).then((user) => {
-        user.user.updateProfile({
-          displayName: name // atualizando nome
-        }).then(() => {
-          navigation.goBack()
-        })
-      }).catch((error) => { console.log(error) })
-
-    } else {
-      //logar
-      auth().signInWithEmailAndPassword(email, password).then(() => { 
-        navigation.goBack()
-      }).catch((error) => { console.log(error) })
-
-    }
+    handleUserLogin(type, email, name, password)
   }
 
 
