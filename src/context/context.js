@@ -2,7 +2,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import auth from "@react-native-firebase/auth";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 
@@ -10,19 +9,23 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 export const Context = createContext()
 
 export default function ContextProvider({ children }) {
-    const [user, setUser] = useState({})
+    const [user, setUser] = useState(null)
     const navigation = useNavigation()
     const [type, setType] = useState(false)
 
-    useEffect(() => {
+    function handleHasUser() {
+        const hasUser = auth().currentUser ? auth().currentUser.toJSON() : null
 
-    }, [])
+        if (hasUser !== null) {
+            setUser(hasUser)
+        }
 
+    }
 
     function handleSignOut() {
 
         auth().signOut().then(() => {
-
+                setUser(null)
         }).catch((error) => { console.log(error) })
     }
 
@@ -39,13 +42,7 @@ export default function ContextProvider({ children }) {
             auth().createUserWithEmailAndPassword(email, password).then((user) => {
                 user.user.updateProfile({
                     displayName: name // atualizando nome
-                }).then( async () => {
-                    try {
-                        // await AsyncStorage.setItem('@user', JSON.stringify(userData))
-
-                    } catch (error) {
-                        console.log(error)
-                    }
+                }).then(async () => {
                     navigation.goBack()
                 })
             }).catch((error) => { console.log(error) })
@@ -60,7 +57,7 @@ export default function ContextProvider({ children }) {
     }
 
     return (
-        <Context.Provider value={{ handleUserLogin, type, setType }}>
+        <Context.Provider value={{ handleUserLogin, type, setType, handleSignOut, handleHasUser, user }}>
             {children}
         </Context.Provider>
     )

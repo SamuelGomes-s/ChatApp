@@ -8,7 +8,6 @@ background-color: rgba(34,34,34,0.45);
 
 const TransparenteView = styled.View`
     flex: 1;
-
 `;
 
 const ContentActions = styled.View`
