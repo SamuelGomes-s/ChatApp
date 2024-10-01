@@ -25,7 +25,7 @@ export default function ContextProvider({ children }) {
     function handleSignOut() {
 
         auth().signOut().then(() => {
-                setUser(null)
+            setUser(null)
         }).catch((error) => { console.log(error) })
     }
 
@@ -36,7 +36,7 @@ export default function ContextProvider({ children }) {
             //Cadastrar 
             if (name === '' || email === '' || password === '') {
                 alert("Preencha todos os campos!")
-                return
+                returnF
             }
 
             auth().createUserWithEmailAndPassword(email, password).then((user) => {
@@ -55,6 +55,7 @@ export default function ContextProvider({ children }) {
 
         }
     }
+
 
     return (
         <Context.Provider value={{ handleUserLogin, type, setType, handleSignOut, handleHasUser, user }}>
