@@ -7,6 +7,7 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { Context } from '../../context/context';
 import ModalCreateGP from '../../components/ModalCreateGP';
 import firestore from '@react-native-firebase/firestore';
+import RoomList from '../../components/RoomList';
 
 
 export default function ChatRoom() {
@@ -58,13 +59,15 @@ export default function ChatRoom() {
     handleGetChats()
     return () => isActive = false
   }, [IsFocused])
+
   if (loading) {
     return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ActivityIndicator size={90} color={'#216dfb'} />
       </View>
     )
   }
+
 
   return (
     <Background>
@@ -75,7 +78,11 @@ export default function ChatRoom() {
       }>
         <Icon name='plus' color={'#fff'} size={35} />
       </ModalBTN>
-      <ListGroups renderItem={({ item }) => <View><Text> {item.name}</Text></View>} data={list} />
+      <ListGroups
+        keyExtractor={item => item._id}
+        showsVerticalScrollIndicator={false}
+        data={list}
+        renderItem={({ item }) => <RoomList data={item} />} />
 
       <Modal visible={modalVisible} transparent={true} animationType='fade'>
         <ModalCreateGP setVisible={() => setModalVisible(false)} />
