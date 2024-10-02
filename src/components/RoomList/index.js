@@ -4,9 +4,9 @@ import { Container, LastMessage, Title, Content, ContentHeader } from './styles'
 
 
 
-export default function RoomList({ data }) {
+export default function RoomList({ data, deleteRoom }) {
     return (
-        <Container>
+        <Container onPress={()=>{}} onLongPress ={()=> deleteRoom && deleteRoom()}>
             <Content>
                 <ContentHeader>
                     <Title numberOfLines={1}> {data.name}</Title>

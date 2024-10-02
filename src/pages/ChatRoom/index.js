@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import Header from '../../components/Header';
 import { Background, ListGroups, ModalBTN } from './styles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { ActivityIndicator, Modal, Text, View } from 'react-native';
+import { ActivityIndicator, Alert, Modal, Text, View } from 'react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { Context } from '../../context/context';
 import ModalCreateGP from '../../components/ModalCreateGP';
@@ -18,7 +18,7 @@ export default function ChatRoom() {
 
   const IsFocused = useIsFocused()
   const [list, setList] = useState([])
-  const [updateModal, setUpdateModal] = useState(false)
+  const [renderUpdate, setRenderUpdate] = useState(false)
 
   const [modalVisible, setModalVisible] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -59,7 +59,34 @@ export default function ChatRoom() {
     }
     handleGetChats()
     return () => isActive = false
-  }, [IsFocused, updateModal])
+  }, [IsFocused, renderUpdate])
+
+  function handleDeleteRoom(owner, idRoom) {
+
+    if (owner !== user?.uid) return
+
+    Alert.alert(
+      'Atenção!',
+      'Você tem certeza que deseja deletar essa sala?',
+      [
+        { text: 'Cancelar', onPress: () => { }, style: 'cancel' },
+        { text: 'Confirmar', onPress: () => deleteRoom(idRoom), style: 'confirm' }
+      ]
+    )
+
+
+  }
+
+  async function deleteRoom(id) {
+    try {
+      await firestore().collection('MESSAGE_THREADS').doc(id).delete()
+      setRenderUpdate(!renderUpdate)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
 
   if (loading) {
     return (
@@ -68,6 +95,7 @@ export default function ChatRoom() {
       </View>
     )
   }
+
 
 
   return (
@@ -83,10 +111,10 @@ export default function ChatRoom() {
         keyExtractor={item => item._id}
         showsVerticalScrollIndicator={false}
         data={list}
-        renderItem={({ item }) => <RoomList data={item} />} />
+        renderItem={({ item }) => <RoomList data={item} deleteRoom={() => handleDeleteRoom(item.owner, item._id)} />} />
 
       <Modal visible={modalVisible} transparent={true} animationType='fade'>
-        <ModalCreateGP setVisible={() => setModalVisible(false)} chekedUpdate= {() => setUpdateModal(!updateModal) }/>
+        <ModalCreateGP setVisible={() => setModalVisible(false)} chekedUpdate={() => setRenderUpdate(!renderUpdate)} />
       </Modal>
 
     </Background>

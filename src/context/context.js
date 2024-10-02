@@ -31,7 +31,6 @@ export default function ContextProvider({ children }) {
 
     function handleUserLogin(type, email, name, password) {
 
-        console.log('deu')
         if (type) {
             //Cadastrar 
             if (name === '' || email === '' || password === '') {

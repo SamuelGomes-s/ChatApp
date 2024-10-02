@@ -9,7 +9,7 @@ import {
     ButtonText,
     AreaInput
 } from "./styles";
-import { Alert, TouchableWithoutFeedback } from "react-native";
+import { TouchableWithoutFeedback } from "react-native";
 import { Context } from "../../context/context";
 
 import firestore from "@react-native-firebase/firestore";
@@ -64,7 +64,7 @@ export default function ModalCreateGP({ setVisible, chekedUpdate }) {
             docRef.collection('MESSAGES').add({
                 text: `Grupo ${nameChat} criado. Seja bem vindo(a)!`,
                 createdAt: firestore.FieldValue.serverTimestamp(),
-                system: true, //Para saber que a mensagem foi criada pelo systema.F
+                system: true, //Para saber que a mensagem foi criada pelo systema.
             }).then(() => {
                 chekedUpdate()
                 setVisible()
@@ -80,7 +80,10 @@ export default function ModalCreateGP({ setVisible, chekedUpdate }) {
 
     return (
         <Container>
-            <TouchableWithoutFeedback onPress={() => setVisible()}>
+            <TouchableWithoutFeedback onPress={() => {
+                setVisible()
+                chekedUpdate()
+            }}>
                 <TransparenteView>
                 </TransparenteView>
             </TouchableWithoutFeedback>
