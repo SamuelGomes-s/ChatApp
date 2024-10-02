@@ -18,6 +18,7 @@ export default function ChatRoom() {
 
   const IsFocused = useIsFocused()
   const [list, setList] = useState([])
+  const [updateModal, setUpdateModal] = useState(false)
 
   const [modalVisible, setModalVisible] = useState(false)
   const [loading, setLoading] = useState(true)
@@ -58,7 +59,7 @@ export default function ChatRoom() {
     }
     handleGetChats()
     return () => isActive = false
-  }, [IsFocused])
+  }, [IsFocused, updateModal])
 
   if (loading) {
     return (
@@ -85,7 +86,7 @@ export default function ChatRoom() {
         renderItem={({ item }) => <RoomList data={item} />} />
 
       <Modal visible={modalVisible} transparent={true} animationType='fade'>
-        <ModalCreateGP setVisible={() => setModalVisible(false)} />
+        <ModalCreateGP setVisible={() => setModalVisible(false)} chekedUpdate= {() => setUpdateModal(!updateModal) }/>
       </Modal>
 
     </Background>

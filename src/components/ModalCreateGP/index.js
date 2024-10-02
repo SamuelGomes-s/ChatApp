@@ -9,23 +9,45 @@ import {
     ButtonText,
     AreaInput
 } from "./styles";
-import { TouchableWithoutFeedback } from "react-native";
+import { Alert, TouchableWithoutFeedback } from "react-native";
 import { Context } from "../../context/context";
 
 import firestore from "@react-native-firebase/firestore";
 
 
-export default function ModalCreateGP({ setVisible }) {
+export default function ModalCreateGP({ setVisible, chekedUpdate }) {
 
     const { user } = useContext(Context)
 
     const [nameChat, setNameChat] = useState('')
 
+
+
     function handleButtonCreate() {
         if (nameChat === '') {
             return
         }
-        handleCreateRoom()
+
+        firestore().collection('MESSAGE_THREADS').get().then((snapshot) => {
+            let limit = 0
+
+            snapshot.docs.map(docItem => {
+
+
+                if (docItem.data().owner === user.uid) {
+                    limit += 1
+                }
+            })
+            if (limit >= 5) {
+                alert('Voce atingiu o limite de criação de salas.')
+
+            } else {
+                handleCreateRoom()
+            }
+
+        }).catch((error) => console.log(error))
+
+
     }
 
 
@@ -43,7 +65,11 @@ export default function ModalCreateGP({ setVisible }) {
                 text: `Grupo ${nameChat} criado. Seja bem vindo(a)!`,
                 createdAt: firestore.FieldValue.serverTimestamp(),
                 system: true, //Para saber que a mensagem foi criada pelo systema.F
-            }).then(() => setVisible())
+            }).then(() => {
+                chekedUpdate()
+                setVisible()
+            }
+            )
 
 
         }).catch((error) => {
