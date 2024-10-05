@@ -12,7 +12,7 @@ import RoomList from '../../components/RoomList';
 
 export default function ChatRoom() {
 
-  const { handleHasUser, user, } = useContext(Context)
+  const { handleHasUser, user, handleDeleteRoom } = useContext(Context)
 
   const navigation = useNavigation();
 
@@ -61,31 +61,7 @@ export default function ChatRoom() {
     return () => isActive = false
   }, [IsFocused, renderUpdate])
 
-  function handleDeleteRoom(owner, idRoom) {
 
-    if (owner !== user?.uid) return
-
-    Alert.alert(
-      'Atenção!',
-      'Você tem certeza que deseja deletar essa sala?',
-      [
-        { text: 'Cancelar', onPress: () => { }, style: 'cancel' },
-        { text: 'Confirmar', onPress: () => deleteRoom(idRoom), style: 'confirm' }
-      ]
-    )
-
-
-  }
-
-  async function deleteRoom(id) {
-    try {
-      await firestore().collection('MESSAGE_THREADS').doc(id).delete()
-      setRenderUpdate(!renderUpdate)
-
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
 
   if (loading) {
