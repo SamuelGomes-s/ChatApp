@@ -1,6 +1,4 @@
-import { FlatList } from "react-native";
 import styled from "styled-components/native";
-
 
 const Background = styled.View`
     flex: 1;
@@ -21,9 +19,6 @@ const ModalBTN = styled.TouchableOpacity`
 `;
 
 const ListGroups = styled.FlatList``;
-
-
-
 
 export {
     Background,

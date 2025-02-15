@@ -5,8 +5,8 @@ const Container = styled.View`
     background-color: #fff;
     margin-bottom: 30px;
 `;
-const SearchArea = styled.View`
- 
+
+const SearchArea = styled.View` 
     flex-direction: row;
     margin: 30px 0px  15px  15px ; 
 `;
@@ -31,15 +31,12 @@ const SearchInput = styled.TextInput`
     border-radius: 8px;
     color: #000;
     font-size: 16px;
-
 `;
+
 const SearchList = styled.FlatList`
-
 `;
-
 
 export {
-
     Container,
     SearchButton,
     SearchInput,

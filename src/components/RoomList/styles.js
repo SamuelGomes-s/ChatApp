@@ -9,11 +9,12 @@ const Container = styled.TouchableOpacity`
     height: 80px;
     background-color: #f0f0f0;    
 `;
+
 const Content = styled.View`
     margin-left: 4px;
     flex-shrink: 1;
-
 `;
+
 const ContentHeader = styled.View`
     flex-direction:  row;
 `;
@@ -25,9 +26,8 @@ const Title = styled.Text`
 `;
 
 const LastMessage = styled.Text`
- font-size: 18px;
+    font-size: 18px;
 `;
-
 
 export {
     Container,
@@ -35,5 +35,4 @@ export {
     LastMessage,
     Content,
     ContentHeader
-
 }

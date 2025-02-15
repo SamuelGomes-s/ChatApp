@@ -5,11 +5,14 @@ import { Context } from "../../context/context";
 import { useNavigation } from "@react-navigation/native";
 
 export default function Header({ checkedLogin }) {
-    const {handleSignOut} = useContext(Context)
+
+    const { handleSignOut } = useContext(Context)
     const navigation = useNavigation()
-    function handleSearch(){
+
+    function handleSearch() {
         navigation.navigate('Search')
     }
+
     return (
         <Container>
             {checkedLogin && <IconBTN onPress={handleSignOut}>

@@ -4,7 +4,6 @@ const Container = styled.View`
     width: 100%;
     padding: ${props => props.userMSG ? ' 0px 0px 15px 50px ' : ' 0px 50px 15px 0px'};
     align-self: ${props => props.userMSG ? 'flex-end' : 'flex-start'};  
-
 `;
 
 const Content = styled.View`
@@ -28,7 +27,7 @@ const NameUser = styled.Text`
 `;
 
 const AreaName = styled.View`
-margin-bottom: 5px;
+    margin-bottom: 5px;
 `;
 
 export {

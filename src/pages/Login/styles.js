@@ -1,6 +1,5 @@
 import styled from "styled-components/native";
 
-
 const Background = styled.SafeAreaView`
     flex:1;
     background-color: #ffffff;
@@ -40,7 +39,6 @@ const Input = styled.TextInput`
     border-radius: 8px;
     color: #000;
     font-size: 16px;
-
 `;
 
 const SubmitButton = styled.TouchableOpacity`
@@ -50,8 +48,6 @@ const SubmitButton = styled.TouchableOpacity`
     align-items: center;
     border-radius: 8px;
     background-color: #2e54d4;
-
-    
 `;
 
 const SubmitText = styled.Text`
@@ -59,8 +55,6 @@ const SubmitText = styled.Text`
     font-weight:bold;
     color: #fff;
 `;
-
-
 
 export {
     Background,

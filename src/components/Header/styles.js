@@ -1,6 +1,5 @@
 import styled from "styled-components/native";
 
-
 const Container = styled.SafeAreaView`
     flex-direction:   row;
     background-color: #216dfb;
@@ -25,12 +24,10 @@ const IconBTN = styled.TouchableOpacity`
 `;
 
 const AreaBTN = styled.View`
-flex: 1;
-justify-content: center;
-align-items: flex-end;
+    flex: 1;
+    justify-content: center;
+    align-items: flex-end;
 `;
-
-
 
 export {
     Container,

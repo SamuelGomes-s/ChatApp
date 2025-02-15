@@ -9,32 +9,23 @@ import ModalCreateGP from '../../components/ModalCreateGP';
 import firestore from '@react-native-firebase/firestore';
 import RoomList from '../../components/RoomList';
 
-
 export default function ChatRoom() {
 
   const { handleHasUser, user, handleDeleteRoom } = useContext(Context)
-
   const navigation = useNavigation();
-
   const IsFocused = useIsFocused()
   const [list, setList] = useState([])
   const [renderUpdate, setRenderUpdate] = useState(false)
-
   const [modalVisible, setModalVisible] = useState(false)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-
     handleHasUser()
-
   }, [IsFocused])
-
 
   useEffect(() => {
     let isActive = true
-
     function handleGetChats() {
-
       firestore()
         .collection('MESSAGE_THREADS')
         .orderBy('lastMessage', 'desc')
@@ -48,21 +39,15 @@ export default function ChatRoom() {
               ...documentSnapshot.data()
             }
           })
-
           if (isActive) {
             setList(threads)
             setLoading(false)
           }
         })
-
-
     }
     handleGetChats()
     return () => isActive = false
   }, [IsFocused, renderUpdate])
-
-
-
 
   if (loading) {
     return (
@@ -71,8 +56,6 @@ export default function ChatRoom() {
       </View>
     )
   }
-
-
 
   return (
     <Background>
@@ -88,13 +71,10 @@ export default function ChatRoom() {
         showsVerticalScrollIndicator={false}
         data={list}
         renderItem={({ item }) => <RoomList data={item} deleteRoom={() => handleDeleteRoom(item.owner, item._id)} />} />
-
       <Modal visible={modalVisible} transparent={true} animationType='fade'>
         <ModalCreateGP setVisible={() => setModalVisible(false)} chekedUpdate={() => setRenderUpdate(!renderUpdate)} />
       </Modal>
-
     </Background>
-
   )
 }
 

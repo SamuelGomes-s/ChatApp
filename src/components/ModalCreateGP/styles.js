@@ -1,9 +1,8 @@
 import styled from "styled-components/native";
 
-
 const Container = styled.SafeAreaView`
-flex: 1;
-background-color: rgba(34,34,34,0.45);
+    flex: 1;
+    background-color: rgba(34,34,34,0.45);
 `;
 
 const TransparenteView = styled.View`
@@ -26,7 +25,6 @@ const Text = styled.Text`
     padding-bottom: 30px;
 `;
 
-
 const Input = styled.TextInput`
     width: 100%;
     background-color: #d9d8d8;
@@ -36,6 +34,7 @@ const Input = styled.TextInput`
     color: #000;
     font-size: 16px;
 `;
+
 const AreaInput = styled.View`
     justify-content:   center;
     align-items: center;
@@ -45,7 +44,6 @@ const AreaInput = styled.View`
     width: 90%;
     height: 45px;
 `;
-
 
 const CreateButtonGP = styled.TouchableOpacity`
     width: 90%;
@@ -61,7 +59,6 @@ const ButtonText = styled.Text`
     font-weight:bold;
     color: #fff;
 `;
-
 
 export {
     Container,

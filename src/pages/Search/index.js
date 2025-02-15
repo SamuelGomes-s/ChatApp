@@ -6,17 +6,16 @@ import firestore from '@react-native-firebase/firestore';
 import { Keyboard } from 'react-native';
 import { Context } from '../../context/context';
 
-
 export default function Search() {
+
   const [input, setInput] = useState('')
   const [list, setList] = useState()
-const {handleDeleteRoom} = useContext(Context)
+  const { handleDeleteRoom } = useContext(Context)
+
   async function searchRoom() {
     if (input === '') return;
-
     const response = await firestore().collection('MESSAGE_THREADS').where('name', '>=', input).where('name', '<=', input + '\uf8ff')
       .get().then((snapshot) => {
-
         const threads = snapshot.docs.map(documentSnapshot => {
           return {
             _id: documentSnapshot.id,
@@ -26,13 +25,11 @@ const {handleDeleteRoom} = useContext(Context)
           }
         })
         setList(threads)
-
         setInput('')
         Keyboard.dismiss();
       }).catch((error) => { console.log(error) })
-
   }
- 
+
   return (
     <Container>
       <SearchArea>
@@ -48,7 +45,7 @@ const {handleDeleteRoom} = useContext(Context)
         data={list}
         keyExtractor={item => item._id}
         showsVerticalScrollIndicator={false}
-        renderItem={({item}) =>  <RoomList data={item} deleteRoom={() => handleDeleteRoom(item.owner, item._id)} />} />
+        renderItem={({ item }) => <RoomList data={item} deleteRoom={() => handleDeleteRoom(item.owner, item._id)} />} />
     </Container>
   )
 }

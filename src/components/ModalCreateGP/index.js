@@ -11,45 +11,31 @@ import {
 } from "./styles";
 import { TouchableWithoutFeedback } from "react-native";
 import { Context } from "../../context/context";
-
 import firestore from "@react-native-firebase/firestore";
-
 
 export default function ModalCreateGP({ setVisible, chekedUpdate }) {
 
     const { user } = useContext(Context)
-
     const [nameChat, setNameChat] = useState('')
-
-
 
     function handleButtonCreate() {
         if (nameChat === '') {
             return
         }
-
         firestore().collection('MESSAGE_THREADS').get().then((snapshot) => {
             let limit = 0
-
             snapshot.docs.map(docItem => {
-
-
                 if (docItem.data().owner === user.uid) {
                     limit += 1
                 }
             })
             if (limit >= 5) {
                 alert('Voce atingiu o limite de criação de salas.')
-
             } else {
                 handleCreateRoom()
             }
-
         }).catch((error) => console.log(error))
-
-
     }
-
 
     async function handleCreateRoom() {
         await firestore().collection('MESSAGE_THREADS').add({
@@ -58,7 +44,6 @@ export default function ModalCreateGP({ setVisible, chekedUpdate }) {
             lastMessage: {
                 text: `Grupo ${nameChat} criado. Seja bem vindo(a)!`,
                 createdAt: firestore.FieldValue.serverTimestamp(),
-
             }
         }).then((docRef) => {
             docRef.collection('MESSAGES').add({
@@ -70,13 +55,10 @@ export default function ModalCreateGP({ setVisible, chekedUpdate }) {
                 setVisible()
             }
             )
-
-
         }).catch((error) => {
             console.log(error)
         })
     }
-
 
     return (
         <Container>
@@ -87,7 +69,6 @@ export default function ModalCreateGP({ setVisible, chekedUpdate }) {
                 <TransparenteView>
                 </TransparenteView>
             </TouchableWithoutFeedback>
-
             <ContentActions>
                 <Text> Criar um novo Grupo? </Text>
                 <AreaInput>
